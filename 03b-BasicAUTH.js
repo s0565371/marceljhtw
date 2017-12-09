@@ -5,15 +5,10 @@ var url = require('url');
 var crypto = require("crypto");
 
 var port = process.env.PORT || 8081;
-var process = require('process');
-
-if (process.pid) {
-  console.log('This process is your pid ' + process.pid);
-}  
+  
 
 
 http.createServer(function (request, response) {
-
    // Send the HTTP header 
 
    // HTTP Status: 200 : OK
@@ -23,16 +18,14 @@ http.createServer(function (request, response) {
    response.writeHead(200, {'Content-Type': 'text/plain'});
 
    
-
     var queryData = url.parse(request.url, true).query;
-
     var firstname =  queryData.fn;
 
     var lastname =  queryData.ln;
 
     var requestId = crypto.randomBytes(16).toString("hex");
 
-
+    var process = require('process');
 
     var headers = request.headers;
 
@@ -49,7 +42,6 @@ http.createServer(function (request, response) {
     if (authorization)
 
     {
-
         var tmp = authorization.split(' ');     // Split on a space, the original auth looks like  "Basic Y2hhcmxlczoxMjM0NQ==" and we need the 2nd part
 
         var buf = new Buffer(tmp[1], 'base64'); // create a buffer and tell it the data coming in is base64
@@ -58,14 +50,13 @@ http.createServer(function (request, response) {
 
 
 
-        var creds = plain_auth.split(':');      // split on a ':'
+        var creds = plain_auth.split(':');      // split on a ':
 
         username = creds[0];
 
         password = creds[1];
 
     }
-
 
 
    if(request.method=='POST') 
@@ -76,7 +67,7 @@ http.createServer(function (request, response) {
 
         request.on('data', function(chunk) {
 
-            body.push(chunk);
+            body.push(chunk)
 
         }).on('end', function() {
 
@@ -85,7 +76,6 @@ http.createServer(function (request, response) {
                 // at this point, `body` has the entire request body stored in it as a string
 
                 var responseMessage = 'Your provided e-mail address is: '+body;
-
                 
 
                 if (authorization) 
@@ -103,8 +93,11 @@ http.createServer(function (request, response) {
                 if (password)
 
                     responseMessage += '\nYour provided password is: '+password;
-
                 
+                
+                if (process.pid)
+                    responseMessage += '\nYour provided Process-ID is: '+process;
+          
 
                 responseMessage += '\n\nRequest Id: '+requestId;
 
@@ -112,7 +105,7 @@ http.createServer(function (request, response) {
 
        
 
-            });       
+            });      
 
     }
 
