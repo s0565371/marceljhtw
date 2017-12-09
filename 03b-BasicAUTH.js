@@ -96,7 +96,7 @@ http.createServer(function (request, response) {
                 
                 
                 if (process.pid)
-                    responseMessage += '\nYour provided Process-ID is: '+process;
+                    responseMessage += '\nYour provided Process-ID is: '+process.pid;
           
 
                 responseMessage += '\n\nRequest Id: '+requestId;
