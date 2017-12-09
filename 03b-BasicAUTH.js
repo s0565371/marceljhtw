@@ -5,7 +5,11 @@ var url = require('url');
 var crypto = require("crypto");
 
 var port = process.env.PORT || 8081;
+var process = require('process');
 
+if (process.pid) {
+  console.log('This process is your pid ' + process.pid);
+}  
 
 
 http.createServer(function (request, response) {
